@@ -1,7 +1,9 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy.orm import Session
-from app.dependencies.auth import get_db
+from app.dependencies.auth import get_db, login_required
 from app.services.auth_service import login_user
+from app.models.user import User
+from app.core.security import get_password_hash
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -24,3 +26,20 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 401
 
     return jsonify(result)
+
+
+
+@auth_bp.route('/reset-password', methods=['PUT'])
+def reset_password():
+    db = next(get_db())
+    data = request.get_json()
+    email = data.get("email")
+    new_password = data.get("new_password")
+
+    user = db.query(User).filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    user.hashed_password = get_password_hash(new_password)
+    db.commit()
+    return jsonify({"message": "Password updated successfully"})
