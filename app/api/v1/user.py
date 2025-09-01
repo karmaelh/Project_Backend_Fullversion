@@ -183,6 +183,7 @@ def read_users_me(user):
 
     })
 
+# Generate a user summary
 @bp.route('/<int:user_id>/summary', methods=['GET'])
 def generate_user_summary(user_id):
     db: Session = next(get_db())
@@ -214,3 +215,11 @@ def generate_user_summary(user_id):
         return jsonify({'summary': summary})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+
+
+
+
+
+

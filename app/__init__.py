@@ -16,7 +16,9 @@ def create_app():
     db.init_app(app)        
     migrate.init_app(app, db) 
 
-    CORS(app, origins="http://localhost:3000", supports_credentials=True)
+    #CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:57499"], supports_credentials=True)
+    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:*"]}}, supports_credentials=True)
+
 
     app.register_blueprint(user.bp, url_prefix='/api/v1/users')
     app.register_blueprint(auth.auth_bp, url_prefix='/api/v1/auth')
@@ -24,3 +26,9 @@ def create_app():
     app.register_blueprint(upload_bp)
 
     return app
+
+
+
+
+
+

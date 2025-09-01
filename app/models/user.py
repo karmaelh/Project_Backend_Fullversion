@@ -15,3 +15,7 @@ class User(Base):
     skills = Column(Text, nullable=True)
     current_project = Column(Text, nullable=True)
     languages_spoken = Column(Text, nullable=True)
+
+
+
+

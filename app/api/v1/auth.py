@@ -43,3 +43,7 @@ def reset_password():
     user.hashed_password = get_password_hash(new_password)
     db.commit()
     return jsonify({"message": "Password updated successfully"})
+
+
+
+

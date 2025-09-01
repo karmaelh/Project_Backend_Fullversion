@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from datetime import timezone
 
 
-from app.core.config import settings  # Contains your SECRET_KEY from .env
+from app.core.config import settings 
 
 # Password hashing configuration
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -10,7 +10,6 @@ def authenticate_user(db: Session, email: str, password: str):
     if not user:
         return None
 
-    # Vérifie si le mot de passe correspond
     if not verify_password(password, user.hashed_password):
         return None
 
@@ -22,7 +21,6 @@ def login_user(db: Session, email: str, password: str):
     if not user:
         return None
 
-    # Si ok, crée le token JWT
     access_token = create_access_token(
         data={"sub": str(user.id)},
         expires_delta=timedelta(minutes=60)

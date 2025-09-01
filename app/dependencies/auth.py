@@ -8,7 +8,6 @@ from functools import wraps
 # JWT configuration
 ALGORITHM = "HS256"
 
-# Utility function: get a database session
 def get_db():
     db = SessionLocal()
     try:
@@ -21,7 +20,7 @@ def get_current_user():
     auth_header = request.headers.get("Authorization")
     
     if not auth_header or not auth_header.startswith("Bearer "):
-        return None  # Pas de token fourni
+        return None  
     
     token = auth_header.split(" ")[1]
     try:
@@ -36,7 +35,6 @@ def get_current_user():
     user = db.query(User).filter(User.id == int(user_id)).first()
     return user
 
-# Decorator to protect routes that require authentication
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
